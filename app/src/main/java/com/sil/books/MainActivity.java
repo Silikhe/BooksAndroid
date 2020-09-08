@@ -7,17 +7,22 @@ import androidx.loader.content.AsyncTaskLoader;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.URL;
 
 public class MainActivity extends AppCompatActivity {
+    private ProgressBar mLoadingProgress;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mLoadingProgress = (ProgressBar) findViewById(R.id.pb_loading);
 
         try {
             URL bookUrl = ApiUtils.buildUrl("cooking");
@@ -48,8 +53,23 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             TextView tvResult = (TextView) findViewById(R.id.tvResponse);
+            TextView tvError = (TextView) findViewById(R.id.tv_error);
             tvResult.setText(result);
+            mLoadingProgress.setVisibility(View.INVISIBLE);
+            if (result == null){
+                tvResult.setVisibility(View.INVISIBLE);
+                tvError.setVisibility(View.VISIBLE);
+            }else {
+                tvResult.setVisibility(View.VISIBLE);
+                tvError.setVisibility(View.INVISIBLE);
+            }
 
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            mLoadingProgress.setVisibility(View.VISIBLE);
         }
     }
 }
