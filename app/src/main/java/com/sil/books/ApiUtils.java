@@ -1,5 +1,6 @@
 package com.sil.books;
 
+import android.net.Uri;
 import android.util.Log;
 
 import java.io.IOException;
@@ -13,12 +14,22 @@ public class ApiUtils {
 
     public static final String BASE_API_URL =
             "https://www.googleapis.com/books/v1/volumes";
+    public static final String QUERY_PARAMETER_KEY = "q";
+
+//    public static final String KEY ="key";
+
+//    public static final String API_KEY =
+//            "AIzaSyAfHKnIypfnEXTggHYHdl6c5pfl_cDzCsY";
 
     public  static URL buildUrl(String title) {
-        String fullString = BASE_API_URL + "?q=" + title;
         URL url = null;
+
+        Uri uri = Uri.parse(BASE_API_URL).buildUpon()
+                .appendQueryParameter(QUERY_PARAMETER_KEY, title)
+//                .appendQueryParameter(KEY, API_KEY)
+                .build();
         try {
-            url = new URL(fullString);
+            url = new URL(uri.toString());
         }
         catch (Exception e){
             e.printStackTrace();

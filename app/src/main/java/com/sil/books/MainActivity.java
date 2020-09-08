@@ -6,6 +6,7 @@ import androidx.loader.content.AsyncTaskLoader;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.io.IOException;
@@ -18,23 +19,37 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        TextView tvResult = (TextView) findViewById(R.id.tvResponse);
-
         try {
             URL bookUrl = ApiUtils.buildUrl("cooking");
-            String jsonResult = ApiUtils.getJson(bookUrl);
-            tvResult.setText(jsonResult);
-        } catch (IOException e) {
-            e.printStackTrace();
+
+            new BooksQueryTask().execute(bookUrl);
+
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
         }
     }
 
-    public class BookQueryTask extends AsyncTaskLoader<URL, Void, String> {
+    public class BooksQueryTask extends AsyncTask<URL, Void, String> {
 
-        @Nullable
+
         @Override
-        public URL loadInBackground() {
-            return null;
+        protected String doInBackground(URL... urls) {
+            URL searchURL = urls[0];
+            String result = null;
+
+            try {
+                result = ApiUtils.getJson(searchURL);
+            } catch (IOException e) {
+                Log.e("Error", e.getMessage());
+            }
+            return result;
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            TextView tvResult = (TextView) findViewById(R.id.tvResponse);
+            tvResult.setText(result);
+
         }
     }
-}o laptop charger
+}
