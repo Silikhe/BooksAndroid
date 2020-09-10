@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ApiUtils {
@@ -59,5 +60,15 @@ public class ApiUtils {
        finally {
            connection.disconnect();
        }
+    }
+
+    public static ArrayList<Book> getBooksFromJson (){
+        final String ID = "id";
+        final String TITLE = "TITLE";
+        final String ID = "id";
+
+
+        ArrayList<Book> books = null;
+        return books;
     }
 }
