@@ -1,5 +1,7 @@
 package com.sil.books;
 
+import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -7,22 +9,33 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.ArrayList;
+
 public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BookViewHolder>{
+
+    ArrayList<Book> books;
+    public BooksAdapter (ArrayList<Book> books){
+        this.books = books;
+    }
 
     @NonNull
     @Override
     public BookViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        Context context = parent.getContext();
+        View itemView = LayoutInflater.from(context)
+                .inflate(R.layout.book_list_item, parent, false);
+        return new BookViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull BookViewHolder holder, int position) {
-
+        Book book = books.get(position);
+        holder.bind(book);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return books.size();
     }
 
     public class BookViewHolder extends RecyclerView.ViewHolder{
