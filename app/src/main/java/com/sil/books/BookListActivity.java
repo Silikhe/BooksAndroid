@@ -38,7 +38,14 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
                 (this, LinearLayoutManager.VERTICAL,false);
         rvBooks.setLayoutManager(booksLayoutManager);
 
+        try {
+            URL bookUrl = ApiUtils.buildUrl("cooking");
 
+            new BooksQueryTask().execute(bookUrl);
+
+        } catch (Exception e) {
+            Log.e("Error", e.getMessage());
+        }
     }
 
     @Override
