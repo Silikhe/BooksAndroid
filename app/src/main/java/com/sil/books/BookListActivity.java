@@ -38,8 +38,7 @@ public class BookListActivity extends AppCompatActivity implements SearchView.On
                 (this, LinearLayoutManager.VERTICAL,false);
         rvBooks.setLayoutManager(booksLayoutManager);
 
-       og.e("Error", e.getMessage());
-        }
+
     }
 
     @Override
