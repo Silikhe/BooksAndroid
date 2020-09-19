@@ -115,9 +115,6 @@ Log.d( "error", e.getMessage()                                                  
         }
 
         @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            mLoadingProgress.setVisibility(View.VISIBLE);
-        }
+
     }
 }
